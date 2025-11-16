@@ -43,15 +43,17 @@ class _LoginViewState extends State<_LoginView> {
               key: _formKey,
               child: Column(
                 children: [
-                  Icon(Icons.local_gas_station,
-                      size: 72, color: Theme.of(context).colorScheme.primary),
+                  Icon(
+                    Icons.local_gas_station,
+                    size: 72,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
                   const SizedBox(height: 16),
                   Text(
                     'Fuel Tracker',
-                    style: Theme.of(context)
-                        .textTheme
-                        .headlineMedium
-                        ?.copyWith(fontWeight: FontWeight.bold),
+                    style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                   const SizedBox(height: 24),
 
@@ -107,7 +109,11 @@ class _LoginViewState extends State<_LoginView> {
                           );
 
                           if (ok && mounted) {
-                            Navigator.pushReplacementNamed(context, '/home');
+                            Navigator.pushNamedAndRemoveUntil(
+                              context,
+                              '/home',
+                              (_) => false,
+                            );
                           }
                         }
                       },
@@ -115,8 +121,7 @@ class _LoginViewState extends State<_LoginView> {
                   ),
 
                   TextButton(
-                    onPressed: () =>
-                        Navigator.pushNamed(context, '/register'),
+                    onPressed: () => Navigator.pushNamed(context, '/register'),
                     child: const Text('Criar conta'),
                   ),
                 ],

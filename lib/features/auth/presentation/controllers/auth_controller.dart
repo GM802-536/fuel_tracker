@@ -9,6 +9,8 @@ class AuthController extends ChangeNotifier {
 
   Future<bool> login(String email, String password) async {
     try {
+      print("CHAMANDO FIREBASE LOGIN...");
+
       loading = true;
       error = null;
       notifyListeners();

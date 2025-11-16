@@ -22,4 +22,6 @@ class AuthRepository {
   }
 
   Future<void> logout() => _auth.signOut();
+
+  User? get currentUser => _auth.currentUser;
 }
