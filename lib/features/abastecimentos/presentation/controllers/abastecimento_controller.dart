@@ -17,7 +17,6 @@ class AbastecimentoController extends ChangeNotifier {
 
   String? get filtroVeiculoId => _filtroVeiculoId;
 
-
   Future<bool> addAbastecimento({
     required DateTime data,
     required double litros,
@@ -32,7 +31,21 @@ class AbastecimentoController extends ChangeNotifier {
       error = null;
       notifyListeners();
 
-      final consumo = km / litros;
+      final ultimo = await _repo.getUltimoAbastecimento(veiculoId);
+
+      double consumo;
+
+      if (ultimo == null) {
+        consumo = 0;
+      } else {
+        final distancia = km - ultimo.quilometragem;
+
+        if (distancia <= 0) {
+          consumo = 0; 
+        } else {
+          consumo = distancia / litros;
+        }
+      }
 
       final ab = AbastecimentoModel(
         id: '',
@@ -60,11 +73,10 @@ class AbastecimentoController extends ChangeNotifier {
   Future<void> delete(String id) => _repo.delete(id);
 
   Stream<List<AbastecimentoModel>> streamAbastecimentos() {
-  return _repo.streamAbastecimentos().map((lista) {
-    if (_filtroVeiculoId == null) return lista;
+    return _repo.streamAbastecimentos().map((lista) {
+      if (_filtroVeiculoId == null) return lista;
 
-    return lista.where((a) => a.veiculoId == _filtroVeiculoId).toList();
-  });
-}
-
+      return lista.where((a) => a.veiculoId == _filtroVeiculoId).toList();
+    });
+  }
 }

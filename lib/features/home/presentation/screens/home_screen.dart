@@ -18,11 +18,10 @@ class HomeScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // 🔥 IMAGEM ILUSTRATIVA
             SizedBox(
               width: 180,
               child: Image.asset(
-                "assets/images/logo2.png", // troque o nome se quiser
+                "assets/images/logo2.png", 
                 fit: BoxFit.contain,
               ),
             ),
