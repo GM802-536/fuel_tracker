@@ -19,18 +19,17 @@ class FiltroVeiculoDropdown extends StatelessWidget {
 
         final lista = snapshot.data!;
 
-        // rótulo atual mostrado no AppBar
-        String label = "Todos";
-        if (abastecimento.filtroVeiculoId != null) {
-          final v = lista.firstWhere(
-            (e) => e.id == abastecimento.filtroVeiculoId,
-            orElse: () => lista.first,
-          );
-          label = "${v.modelo} (${v.placa})";
-        }
+        String label = abastecimento.filtroVeiculoId == null
+            ? "Selecione um veículo"
+            : (() {
+                final v = lista.firstWhere(
+                  (e) => e.id == abastecimento.filtroVeiculoId,
+                  orElse: () => lista.first,
+                );
+                return "${v.modelo} (${v.placa})";
+              })();
 
-        return PopupMenuButton<String?>(
-          // botão “fechado” no AppBar
+        return PopupMenuButton<String?>(         
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -52,10 +51,6 @@ class FiltroVeiculoDropdown extends StatelessWidget {
 
           itemBuilder: (context) {
             return [
-              const PopupMenuItem(
-                value: null,
-                child: Text("Todos"),
-              ),
               ...lista.map(
                 (v) => PopupMenuItem(
                   value: v.id,

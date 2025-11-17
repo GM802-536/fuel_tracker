@@ -31,4 +31,21 @@ class AbastecimentoRepository {
       },
     );
   }
+
+  Future<AbastecimentoModel?> getUltimoAbastecimento(String veiculoId) async {
+  final snap = await _collection()
+      .where('veiculoId', isEqualTo: veiculoId)
+      .orderBy('quilometragem', descending: true)
+      .limit(1)
+      .get();
+
+  if (snap.docs.isEmpty) return null;
+
+  return AbastecimentoModel.fromMap(
+    snap.docs.first.id,
+    snap.docs.first.data() as Map<String, dynamic>,
+  );
+}
+
+
 }

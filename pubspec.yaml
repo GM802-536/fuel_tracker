@@ -34,6 +34,7 @@ dependencies:
   # Dependência principal - OBRIGATÓRIA
   firebase_core: ^4.2.1 # Use a versão mais recente
   provider: ^6.1.2
+  fl_chart: ^0.68.0
   
   # Adicione os pacotes dos serviços que vai usar:
   firebase_auth: ^6.1.2
