@@ -16,14 +16,16 @@ class GraficoConsumo extends StatelessWidget {
       );
     }
 
+    final dadosOrdenados = [...dados].reversed.toList();
+
     return SizedBox(
       height: 220,
       child: LineChart(
         LineChartData(
           minX: 0,
-          maxX: (dados.length - 1).toDouble(),
+          maxX: (dadosOrdenados.length - 1).toDouble(),
           minY: 0,
-          maxY: dados.map((e) => e.consumo).reduce((a, b) => a > b ? a : b) + 2,
+          maxY: dadosOrdenados.map((e) => e.consumo).reduce((a, b) => a > b ? a : b) + 2,
 
           titlesData: const FlTitlesData(show: true),
 
@@ -33,8 +35,8 @@ class GraficoConsumo extends StatelessWidget {
               color: Colors.blue,
               barWidth: 4,
               spots: [
-                for (int i = 0; i < dados.length; i++)
-                  FlSpot(i.toDouble(), dados[i].consumo),
+                for (int i = 0; i < dadosOrdenados.length; i++)
+                  FlSpot(i.toDouble(), dadosOrdenados[i].consumo),
               ],
             ),
           ],
