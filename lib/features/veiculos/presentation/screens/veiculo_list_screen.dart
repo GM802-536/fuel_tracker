@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../../abastecimentos/presentation/screens/abastecimento_list_screen.dart';
 
 import '../../presentation/controllers/veiculo_controller.dart';
 import 'veiculo_form_screen.dart';
@@ -24,7 +25,22 @@ class _VeiculoListView extends StatelessWidget {
     final controller = context.watch<VeiculoController>();
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Meus Veículos')),
+      appBar: AppBar(
+        title: const Text('Meus Veículos'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.local_gas_station),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => const AbastecimentoListScreen(),
+                ),
+              );
+            },
+          ),
+        ],
+      ),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
         onPressed: () {
