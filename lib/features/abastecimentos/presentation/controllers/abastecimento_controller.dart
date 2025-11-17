@@ -27,6 +27,7 @@ class AbastecimentoController extends ChangeNotifier {
     String? observacao,
   }) async {
     try {
+      print("==> addAbastecimento chamado");
       loading = true;
       error = null;
       notifyListeners();
@@ -35,15 +36,16 @@ class AbastecimentoController extends ChangeNotifier {
 
       double consumo;
 
+
       if (ultimo == null) {
         consumo = 0;
       } else {
         final distancia = km - ultimo.quilometragem;
 
         if (distancia <= 0) {
-          consumo = 0; 
+          consumo = 0;
         } else {
-          consumo = distancia / litros;
+          consumo = distancia / ultimo.quantidadeLitros;
         }
       }
 
@@ -61,7 +63,9 @@ class AbastecimentoController extends ChangeNotifier {
 
       await _repo.add(ab);
       return true;
-    } catch (e) {
+    } catch (e, stack) {
+      print("ERRO AO ADICIONAR: $e");
+      print(stack);
       error = e.toString();
       return false;
     } finally {
