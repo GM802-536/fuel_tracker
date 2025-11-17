@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
+import 'package:provider/provider.dart';
+
 import 'app/routes/app_router.dart';
 import 'app/theme/app_theme.dart';
+import 'features/auth/presentation/controllers/auth_controller.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,12 +21,16 @@ class FuelTrackerApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Fuel Tracker',
-      debugShowCheckedModeBanner: false,
-      theme: AppTheme.lightTheme,
-      initialRoute: AppRouter.initialRoute,
-      onGenerateRoute: AppRouter.onGenerateRoute,
+    return ChangeNotifierProvider(
+      create: (_) => AuthController(),
+
+      child: MaterialApp(
+        title: 'Fuel Tracker',
+        debugShowCheckedModeBanner: false,
+        theme: AppTheme.lightTheme,
+        initialRoute: AppRouter.initialRoute,
+        onGenerateRoute: AppRouter.onGenerateRoute,
+      ),
     );
   }
 }

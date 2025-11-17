@@ -63,7 +63,7 @@ class _VeiculoFormScreenState extends State<VeiculoFormScreen> {
               const SizedBox(height: 16),
 
               DropdownButtonFormField(
-                value: tipoCombustivel,
+                initialValue: tipoCombustivel,
                 items: const [
                   DropdownMenuItem(value: 'Gasolina', child: Text('Gasolina')),
                   DropdownMenuItem(value: 'Etanol', child: Text('Etanol')),

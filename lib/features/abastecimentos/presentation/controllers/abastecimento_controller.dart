@@ -15,6 +15,9 @@ class AbastecimentoController extends ChangeNotifier {
     notifyListeners();
   }
 
+  String? get filtroVeiculoId => _filtroVeiculoId;
+
+
   Future<bool> addAbastecimento({
     required DateTime data,
     required double litros,

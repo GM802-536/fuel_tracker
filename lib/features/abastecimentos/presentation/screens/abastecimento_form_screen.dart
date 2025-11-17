@@ -49,7 +49,7 @@ class _AbastecimentoFormScreenState extends State<AbastecimentoFormScreen> {
                   return DropdownButtonFormField(
                     decoration:
                         const InputDecoration(labelText: "Veículo"),
-                    value: veiculoId,
+                    initialValue: veiculoId,
                     items: list
                         .map((v) => DropdownMenuItem(
                               value: v.id,
@@ -100,7 +100,7 @@ class _AbastecimentoFormScreenState extends State<AbastecimentoFormScreen> {
               DropdownButtonFormField(
                 decoration: const InputDecoration(
                     labelText: "Tipo de combustível"),
-                value: tipoCombustivel,
+                initialValue: tipoCombustivel,
                 items: const [
                   DropdownMenuItem(value: 'Gasolina', child: Text('Gasolina')),
                   DropdownMenuItem(value: 'Etanol', child: Text('Etanol')),

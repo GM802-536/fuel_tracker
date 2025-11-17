@@ -2,52 +2,68 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../veiculos/presentation/controllers/veiculo_controller.dart';
-import '../../presentation/controllers/abastecimento_controller.dart';
+import '../controllers/abastecimento_controller.dart';
 
-class FiltroVeiculoDropdown extends StatefulWidget {
+class FiltroVeiculoDropdown extends StatelessWidget {
   const FiltroVeiculoDropdown({super.key});
 
   @override
-  State<FiltroVeiculoDropdown> createState() => _FiltroVeiculoDropdownState();
-}
-
-class _FiltroVeiculoDropdownState extends State<FiltroVeiculoDropdown> {
-  String? veiculoIdSelecionado;
-
-  @override
   Widget build(BuildContext context) {
-    final veiculoCtrl = context.watch<VeiculoController>();
+    final abastecimento = context.watch<AbastecimentoController>();
+    final veiculos = context.watch<VeiculoController>();
 
     return StreamBuilder(
-      stream: veiculoCtrl.streamVeiculos(),
+      stream: veiculos.streamVeiculos(),
       builder: (context, snapshot) {
         if (!snapshot.hasData) return const SizedBox();
 
-        final veiculos = snapshot.data!;
+        final lista = snapshot.data!;
 
-        return DropdownButton<String>(
-          value: veiculoIdSelecionado,
-          hint: const Text("Filtrar"),
-          underline: const SizedBox(),
-          onChanged: (value) {
-            setState(() {
-              veiculoIdSelecionado = value;
-            });
+        // rótulo atual mostrado no AppBar
+        String label = "Todos";
+        if (abastecimento.filtroVeiculoId != null) {
+          final v = lista.firstWhere(
+            (e) => e.id == abastecimento.filtroVeiculoId,
+            orElse: () => lista.first,
+          );
+          label = "${v.modelo} (${v.placa})";
+        }
 
-            context.read<AbastecimentoController>().setFiltroVeiculo(value);
-          },
-          items: [
-            const DropdownMenuItem(
-              value: null,
-              child: Text("Todos"),
-            ),
-            ...veiculos.map(
-              (v) => DropdownMenuItem(
-                value: v.id,
-                child: Text("${v.modelo} (${v.placa})"),
+        return PopupMenuButton<String?>(
+          // botão “fechado” no AppBar
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                label,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w500,
+                ),
               ),
-            ),
-          ],
+              const SizedBox(width: 4),
+              const Icon(Icons.arrow_drop_down, color: Colors.white),
+            ],
+          ),
+
+          onSelected: (value) {
+            abastecimento.setFiltroVeiculo(value);
+          },
+
+          itemBuilder: (context) {
+            return [
+              const PopupMenuItem(
+                value: null,
+                child: Text("Todos"),
+              ),
+              ...lista.map(
+                (v) => PopupMenuItem(
+                  value: v.id,
+                  child: Text("${v.modelo} (${v.placa})"),
+                ),
+              ),
+            ];
+          },
         );
       },
     );

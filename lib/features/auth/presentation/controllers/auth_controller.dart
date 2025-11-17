@@ -42,4 +42,9 @@ class AuthController extends ChangeNotifier {
       notifyListeners();
     }
   }
+
+  Future<void> logout() async {
+  await _repo.logout();
+}
+
 }
